@@ -1,9 +1,14 @@
 //create my array of objects
-const todos = [
+let InitialTodos = [
     {id: 1, title: "Dokus Guken", done: false},
     {id: 2, title: "learn HTML", done: false},
     {id: 3, title: "laufe", done: false},
 ];
+if (!localStorage.getItem('todos')){
+    localStorage.setItem('todos', JSON.stringify(InitialTodos));
+}
+
+let todos = JSON.parse(localStorage.getItem('todos')) || [];
 
 function createTodoItems(todoData) {
     // <li><input type="checkbox"/> <label>Clean up</label></li>
@@ -35,10 +40,12 @@ function addTodoItem(event) {
     const title = document.querySelector('form > input').value;
 
     todos.push({id: newID, title: title, done: false});
+    localStorage.setItem('todos', JSON.stringify(todos))
     renderTodos(todos)
 }
 
-document.querySelector('form').addEventListener('submit', addTodoItem)
+document.querySelector('form').addEventListener('submit', addTodoItem);
+
 
 renderTodos(todos)
 
